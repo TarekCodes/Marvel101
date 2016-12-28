@@ -10,7 +10,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 
 import static com.tareksaidee.marvel101.MainActivity.LOG_TAG;
 
@@ -20,7 +19,9 @@ import static com.tareksaidee.marvel101.MainActivity.LOG_TAG;
 
 public class NetworkUtils {
 
-    public static ArrayList<Character> getData(String requestUrl){
+    private final static String API_HASH = "?apikey=c4f51bb76c3a2fcb7f549b56b1580b16&hash=96bc3cc90097e904d14d701b1f490445&ts=101213";
+
+    public static String getData(String requestUrl){
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
         try {
@@ -28,7 +29,7 @@ public class NetworkUtils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-        return QueryUtils.extractEarthquakes(jsonResponse);
+        return jsonResponse;
     }
 
     private static URL createUrl(String stringUrl) {
