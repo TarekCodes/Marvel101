@@ -1,5 +1,7 @@
 package com.tareksaidee.marvel101;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -8,6 +10,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 
 public class CharactersActivity extends AppCompatActivity {
@@ -34,9 +39,9 @@ public class CharactersActivity extends AppCompatActivity {
                 String name = curr.getString("name");
                 String descrp = curr.getString("description");
                 JSONObject image = curr.getJSONObject("thumbnail");
-                String imageUrl = image.getString("path");
-                String imageExt = image.getString("extension");
-                Character character = new Character(name,id,descrp,imageUrl,imageExt);
+                String imageUrl = image.getString("path") + image.getString("extension");
+                Bitmap imageBitmap = getBitmapFromURL(imageUrl);
+                Character character = new Character(name,id,descrp,imageBitmap);
                 characters.add(character);
             }
         } catch (JSONException e) {
@@ -46,5 +51,20 @@ public class CharactersActivity extends AppCompatActivity {
 
         // Return the list of earthquakes
         return characters;
+    }
+
+    private static Bitmap getBitmapFromURL(String src) {
+        try {
+            java.net.URL url = new java.net.URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            return BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

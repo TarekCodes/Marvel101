@@ -1,5 +1,7 @@
 package com.tareksaidee.marvel101;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by tarek on 12/28/2016.
  */
@@ -9,15 +11,13 @@ public class Character {
     private String mName;
     private int mID;
     private String mDescrp;
-    private String mImageURL;
-    private String mImageExt;
+    private Bitmap mImage;
 
-    public Character(String name, int ID, String descrp, String imageURL, String imageExt){
+    public Character(String name, int ID, String descrp, Bitmap image){
         mName = name;
         mID = ID;
         mDescrp = descrp;
-        mImageURL = imageURL;
-        mImageExt = imageExt;
+        mImage = image;
     }
 
     public String getCharName(){
@@ -32,12 +32,9 @@ public class Character {
         return mDescrp;
     }
 
-    public String getImageURL(){
-        return mImageURL;
+    public Bitmap getImage(){
+        return mImage;
     }
 
-    public String getImageExt(){
-        return mImageExt;
-    }
 
 }
