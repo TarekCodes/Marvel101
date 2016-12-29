@@ -1,5 +1,7 @@
 package com.tareksaidee.marvel101;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -18,8 +20,6 @@ import static com.tareksaidee.marvel101.MainActivity.LOG_TAG;
  */
 
 public class NetworkUtils {
-
-    private final static String API_HASH = "?apikey=c4f51bb76c3a2fcb7f549b56b1580b16&hash=96bc3cc90097e904d14d701b1f490445&ts=101213";
 
     public static String getData(String requestUrl){
         URL url = createUrl(requestUrl);
@@ -92,6 +92,21 @@ public class NetworkUtils {
             }
         }
         return output.toString();
+    }
+
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            java.net.URL url = new java.net.URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url
+                    .openConnection();
+            connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            return BitmapFactory.decodeStream(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

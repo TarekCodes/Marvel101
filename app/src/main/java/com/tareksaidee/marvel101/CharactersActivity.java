@@ -1,70 +1,76 @@
 package com.tareksaidee.marvel101;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.app.LoaderManager;
+import android.content.AsyncTaskLoader;
+import android.content.Context;
+import android.content.Loader;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Calendar;
 
-public class CharactersActivity extends AppCompatActivity {
+public class CharactersActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Character>> {
+
+    private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/characters";
+    private static final int CHARACTER_LOADER_ID = 1;
+    ArrayList<Character> characters;
+    CharacterAdapter adapter;
+    ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_characters);
+        listView = (ListView) findViewById(R.id.list);
+        LoaderManager loaderManager = getLoaderManager();
+        loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
+    }
+
+    @Override
+    public Loader<ArrayList<Character>> onCreateLoader(int id, Bundle args) {
+        Uri baseUri = Uri.parse(QUERY_URL);
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+        String timeStamp = Calendar.getInstance().getTime().toString();
+        uriBuilder.appendQueryParameter("apikey", SECRET_KEYS.PUBLIC_KEY);
+        uriBuilder.appendQueryParameter("limit", "50");
+        uriBuilder.appendQueryParameter("ts", timeStamp);
+        uriBuilder.appendQueryParameter("hash", QueryUtils.getMD5Hash(timeStamp));
+        return new CharacterLoader(this, uriBuilder.toString());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<ArrayList<Character>> loader, ArrayList<Character> data) {
+        characters = data;
+        adapter = new CharacterAdapter(CharactersActivity.this, characters);
+        listView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<ArrayList<Character>> loader) {
+        adapter.clear();
     }
 
 
+    private static class CharacterLoader extends AsyncTaskLoader<ArrayList<Character>> {
 
+        private String mUrl;
 
-    public static ArrayList<Character> extractCharacters(String JSONResponse) {
-
-        ArrayList<Character> characters = new ArrayList<>();
-
-        try {
-            JSONObject jsonObject = new JSONObject(JSONResponse);
-            JSONArray results = jsonObject.getJSONArray("results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject curr = results.getJSONObject(i);
-                int id = curr.getInt("id");
-                String name = curr.getString("name");
-                String descrp = curr.getString("description");
-                JSONObject image = curr.getJSONObject("thumbnail");
-                String imageUrl = image.getString("path") + image.getString("extension");
-                Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Character character = new Character(name,id,descrp,imageBitmap);
-                characters.add(character);
-            }
-        } catch (JSONException e) {
-
-            Log.e("character JSON", "Problem parsing the character JSON results", e);
+        CharacterLoader(Context context, String url) {
+            super(context);
+            mUrl = url;
         }
 
-        // Return the list of earthquakes
-        return characters;
-    }
+        @Override
+        protected void onStartLoading() {
+            forceLoad();
+        }
 
-    private static Bitmap getBitmapFromURL(String src) {
-        try {
-            java.net.URL url = new java.net.URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url
-                    .openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            return BitmapFactory.decodeStream(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
+        @Override
+        public ArrayList<Character> loadInBackground() {
+            return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
         }
     }
 }
