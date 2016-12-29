@@ -7,11 +7,10 @@
 
     <ImageView
         android:id="@+id/character_image"
-        android:layout_width="72dp"
-        android:minWidth="72dp"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="92dp"
         android:layout_weight="1"
-        android:scaleType="centerCrop"
+        android:scaleType="fitXY"
         android:contentDescription="character image" />
 
     <LinearLayout
