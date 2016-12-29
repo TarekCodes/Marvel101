@@ -10,6 +10,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String LOG_TAG = MainActivity.class.getName();
     Button charactersButton;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +20,15 @@ public class MainActivity extends AppCompatActivity {
         charactersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),CharactersActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CharactersActivity.class);
+                startActivity(intent);
+            }
+        });
+        searchButton = (Button) findViewById(R.id.search_button);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
                 startActivity(intent);
             }
         });
