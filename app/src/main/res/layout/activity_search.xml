@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_search"
     android:layout_width="match_parent"
@@ -7,32 +8,18 @@
     android:orientation="vertical"
     tools:context="com.tareksaidee.marvel101.SearchActivity">
 
-    <EditText
-        android:id="@+id/character_search_box"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@android:color/holo_green_dark"
-        android:hint="character name"/>
+        app:tabIndicatorColor="#ffffff"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="#ffffff"
+        app:tabTextColor="#A8A19E" />
 
-    <Button
-        android:id="@+id/start_char_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Search"/>
-    <CheckBox
-        android:id="@+id/starts_with_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Starts With"/>
-
-    <ListView
-        android:id="@+id/character_search_list"
-        android:layout_marginTop="16dp"
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </ListView>
+        android:layout_height="match_parent" />
 
 </LinearLayout>
