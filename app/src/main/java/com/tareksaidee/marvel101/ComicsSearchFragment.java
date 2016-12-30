@@ -48,8 +48,8 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getLoaderManager().destroyLoader(COMICS_LOADER_ID);
                 getLoaderManager().initLoader(COMICS_LOADER_ID, null, ComicsSearchFragment.this);
-                COMICS_LOADER_ID += 3;
             }
         });
         return rootView;

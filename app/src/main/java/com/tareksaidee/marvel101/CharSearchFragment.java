@@ -46,8 +46,8 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                getLoaderManager().destroyLoader(CHARACTER_LOADER_ID);
                 getLoaderManager().initLoader(CHARACTER_LOADER_ID, null, CharSearchFragment.this);
-                CHARACTER_LOADER_ID += 2;
             }
         });
         return rootView;
