@@ -37,6 +37,8 @@ public class ComicAdapter extends ArrayAdapter {
         cover.setImageBitmap(comic.getCover());
         title.setText(comic.getTitle());
         synopsis.setText(comic.getSynop());
+        creators.setText(comic.getCreators());
+        date.setText(comic.getPubDate());
         return listItemView;
     }
 }

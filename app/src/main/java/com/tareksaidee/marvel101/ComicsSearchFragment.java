@@ -20,14 +20,14 @@ import java.util.Calendar;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ComicsSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Character>> {
+public class ComicsSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Comic>> {
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/comics";
     private static int COMICS_LOADER_ID = 1;
-    ArrayList<Character> characters;
-    CharacterAdapter adapter;
+    ArrayList<Comic> comics;
+    ComicAdapter adapter;
     ListView listView;
-    EditText charSearchBox;
+    EditText comicSearchBox;
     Button searchButton;
     CheckBox startsWithCheck;
 
@@ -40,9 +40,9 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.char_search_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_comics_search, container, false);
         listView = (ListView) rootView.findViewById(R.id.list);
-        charSearchBox = (EditText) rootView.findViewById(R.id.char_search_box);
+        comicSearchBox = (EditText) rootView.findViewById(R.id.char_search_box);
         searchButton = (Button) rootView.findViewById(R.id.start_search_button);
         startsWithCheck = (CheckBox) rootView.findViewById(R.id.starts_with_check);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -57,38 +57,40 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
 
 
     @Override
-    public android.support.v4.content.Loader<ArrayList<Character>> onCreateLoader(int id, Bundle args) {
+    public android.support.v4.content.Loader<ArrayList<Comic>> onCreateLoader(int id, Bundle args) {
         Uri baseUri = Uri.parse(QUERY_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
         uriBuilder.appendQueryParameter("apikey", SECRET_KEYS.PUBLIC_KEY);
         uriBuilder.appendQueryParameter("limit", "50");
+        uriBuilder.appendQueryParameter("noVariants", "true");
+        uriBuilder.appendQueryParameter("format", "comic");
         uriBuilder.appendQueryParameter("ts", timeStamp);
         uriBuilder.appendQueryParameter("hash", QueryUtils.getMD5Hash(timeStamp));
         if (startsWithCheck.isChecked())
-            uriBuilder.appendQueryParameter("nameStartsWith", charSearchBox.getText().toString());
+            uriBuilder.appendQueryParameter("titleStartsWith", comicSearchBox.getText().toString());
         else
-            uriBuilder.appendQueryParameter("name", charSearchBox.getText().toString());
-        return new ComicsSearchFragment.CharacterLoader(this.getContext(), uriBuilder.toString());
+            uriBuilder.appendQueryParameter("title", comicSearchBox.getText().toString());
+        return new ComicsSearchFragment.ComicsLoader(this.getContext(), uriBuilder.toString());
     }
 
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<Character>> loader, ArrayList<Character> data) {
-        characters = data;
-        adapter = new CharacterAdapter(getContext(), characters);
+    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<Comic>> loader, ArrayList<Comic> data) {
+        comics = data;
+        adapter = new ComicAdapter(getContext(), comics);
         listView.setAdapter(adapter);
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<Character>> loader) {
+    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<Comic>> loader) {
         adapter.clear();
     }
 
-    private static class CharacterLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<Character>> {
+    private static class ComicsLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<Comic>> {
 
         private String mUrl;
 
-        CharacterLoader(Context context, String url) {
+        ComicsLoader(Context context, String url) {
             super(context);
             mUrl = url;
         }
@@ -99,8 +101,8 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         }
 
         @Override
-        public ArrayList<Character> loadInBackground() {
-            return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
+        public ArrayList<Comic> loadInBackground() {
+            return QueryUtils.extractComics(NetworkUtils.getData(mUrl));
         }
     }
 

@@ -68,7 +68,7 @@ public class NetworkUtils {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Problem retrieving the earthquake JSON results.", e);
+            Log.e(LOG_TAG, "Problem retrieving JSON results.", e);
         } finally {
             if (urlConnection != null) {
                 urlConnection.disconnect();
