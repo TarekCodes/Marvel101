@@ -10,7 +10,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private String tabTitles[] = new String[] { "Characters", "Colors", "Family", "Phrases" };
+    private String tabTitles[] = new String[] { "Characters", "Comics", "Family", "Phrases" };
 
     SimpleFragmentPagerAdapter(FragmentManager fm){
         super(fm);
@@ -23,11 +23,18 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return new CharSearchFragment();
+        switch (position){
+            case 0:
+                return new CharSearchFragment();
+            case 1:
+                return new ComicsSearchFragment();
+            default:
+                return new CharSearchFragment();
+        }
     }
 
     @Override
     public int getCount() {
-        return 1;
+        return 2;
     }
 }
