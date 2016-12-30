@@ -38,7 +38,7 @@
             tools:text="CAPTAIN AMERICA #1" />
 
         <TextView
-            android:id="@+id/character_description"
+            android:id="@+id/comic_synopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -75,6 +75,7 @@
             android:text="Published"/>
 
         <TextView
+            android:id="@+id/comic_pub_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

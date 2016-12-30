@@ -9,21 +9,21 @@ import android.graphics.Bitmap;
 public class Comic {
     private String mTitle;
     private int mDigitlaID;
-    private String mDescrp;
+    private String mSynop;
     private Bitmap mCover;
     private String mPubDate;
     private String mCreators;
 
-    public Comic(String title, int ID, String descrp, Bitmap cover, String pubDate, String creators) {
+    public Comic(String title, int ID, String synop, Bitmap cover, String pubDate, String creators) {
         mTitle = title;
         mDigitlaID = ID;
-        mDescrp = descrp;
+        mSynop = synop;
         mCover = cover;
         mPubDate = pubDate;
         mCreators = creators;
     }
 
-    public String getCharName() {
+    public String getTitle() {
         return mTitle;
     }
 
@@ -31,11 +31,11 @@ public class Comic {
         return mDigitlaID;
     }
 
-    public String getDecrp() {
-        return mDescrp;
+    public String getSynop() {
+        return mSynop;
     }
 
-    public Bitmap getImage() {
+    public Bitmap getCover() {
         return mCover;
     }
 
