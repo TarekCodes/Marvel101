@@ -10,17 +10,24 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
+    private String tabTitles[] = new String[] { "Characters", "Colors", "Family", "Phrases" };
+
     SimpleFragmentPagerAdapter(FragmentManager fm){
         super(fm);
     }
 
     @Override
+    public CharSequence getPageTitle(int position) {
+        return tabTitles[position];
+    }
+
+    @Override
     public Fragment getItem(int position) {
-        return null;
+        return new CharSearchFragment();
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return 1;
     }
 }
