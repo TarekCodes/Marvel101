@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Created by tarek on 12/29/2016.
  */
 
-public class ComicAdapter extends ArrayAdapter {
+public class ComicAdapter extends ArrayAdapter<Comic> {
 
     public ComicAdapter(Context context, ArrayList<Comic> comics) {
         super(context, 0, comics);
