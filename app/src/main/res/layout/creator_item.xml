@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="96dp"
     android:orientation="horizontal">
 
+
     <ImageView
-        android:id="@+id/comic_cover"
+        android:id="@+id/creator_image"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -26,59 +26,33 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/comic_title"
+            android:id="@+id/creator_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:layout_gravity="center"
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-medium"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            tools:text="CAPTAIN AMERICA #1" />
-
-        <TextView
-            android:id="@+id/comic_synopsis"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:gravity="center"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:maxLines="3"
-            android:textSize="12sp"
-            tools:text="A VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDER" />
+            android:textSize="28sp"
+            android:textStyle="bold"
+            tools:text="Jack Kirby" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:text="Creators"
+            android:text="Work include"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/comic_creators"
+            android:id="@+id/creator_events"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:gravity="center"
-            tools:text="Writer: Stan Lee, Art: Jack Kirby, Writer: Stan Lee, Art: Jack Kirby, Writer: Stan Lee, Art: Jack Kirby, " />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center"
-            android:textStyle="bold"
-            android:textColor="@android:color/holo_red_dark"
-            android:text="Published"/>
-
-        <TextView
-            android:id="@+id/comic_pub_date"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="10/22/2016"/>
+            tools:text="Civil war\nHouse of M\nCaptain America" />
     </LinearLayout>
+
 </LinearLayout>
