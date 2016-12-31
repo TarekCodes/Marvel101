@@ -5,6 +5,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,21 +17,22 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CharSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Character>> {
+public class CreatorsSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Creator>> {
 
-    private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/characters";
-    private static int CHARACTER_LOADER_ID = 1;
-    ArrayList<Character> characters;
-    CharacterAdapter adapter;
+    private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/creators";
+    private static int CREATORS_LOADER_ID = 4;
+    ArrayList<Creator> creators;
+    CreatorAdapter adapter;
     ListView listView;
-    EditText charSearchBox;
+    EditText creatorSearchBox;
     Button searchButton;
     CheckBox startsWithCheck;
 
-    public CharSearchFragment() {
+    public CreatorsSearchFragment() {
         // Required empty public constructor
     }
 
@@ -38,24 +40,23 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_char_search, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_creators_search, container, false);
         listView = (ListView) rootView.findViewById(R.id.list);
-        charSearchBox = (EditText) rootView.findViewById(R.id.char_search_box);
+        creatorSearchBox = (EditText) rootView.findViewById(R.id.creator_search_box);
         searchButton = (Button) rootView.findViewById(R.id.start_search_button);
         startsWithCheck = (CheckBox) rootView.findViewById(R.id.starts_with_check);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLoaderManager().destroyLoader(CHARACTER_LOADER_ID);
-                getLoaderManager().initLoader(CHARACTER_LOADER_ID, null, CharSearchFragment.this);
+                getLoaderManager().destroyLoader(CREATORS_LOADER_ID);
+                getLoaderManager().initLoader(CREATORS_LOADER_ID, null, CreatorsSearchFragment.this);
             }
         });
         return rootView;
     }
 
-
     @Override
-    public android.support.v4.content.Loader<ArrayList<Character>> onCreateLoader(int id, Bundle args) {
+    public Loader<ArrayList<Creator>> onCreateLoader(int id, Bundle args) {
         Uri baseUri = Uri.parse(QUERY_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
@@ -64,29 +65,29 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         uriBuilder.appendQueryParameter("ts", timeStamp);
         uriBuilder.appendQueryParameter("hash", QueryUtils.getMD5Hash(timeStamp));
         if (startsWithCheck.isChecked())
-            uriBuilder.appendQueryParameter("nameStartsWith", charSearchBox.getText().toString());
+            uriBuilder.appendQueryParameter("nameStartsWith", creatorSearchBox.getText().toString());
         else
-            uriBuilder.appendQueryParameter("name", charSearchBox.getText().toString());
-        return new CharacterLoader(this.getContext(), uriBuilder.toString());
+            uriBuilder.appendQueryParameter("nameStartsWith", creatorSearchBox.getText().toString());
+        return new CreatorsSearchFragment.CreatorsLoader(this.getContext(), uriBuilder.toString());
     }
 
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<Character>> loader, ArrayList<Character> data) {
-        characters = data;
-        adapter = new CharacterAdapter(getContext(), characters);
+    public void onLoadFinished(Loader<ArrayList<Creator>> loader, ArrayList<Creator> data) {
+        creators = data;
+        adapter = new CreatorAdapter(getContext(), creators);
         listView.setAdapter(adapter);
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<Character>> loader) {
+    public void onLoaderReset(Loader<ArrayList<Creator>> loader) {
         adapter.clear();
     }
 
-    private static class CharacterLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<Character>> {
+    private static class CreatorsLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<Creator>> {
 
         private String mUrl;
 
-        CharacterLoader(Context context, String url) {
+        CreatorsLoader(Context context, String url) {
             super(context);
             mUrl = url;
         }
@@ -97,8 +98,8 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         }
 
         @Override
-        public ArrayList<Character> loadInBackground() {
-            return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
+        public ArrayList<Creator> loadInBackground() {
+            return QueryUtils.extractComics(NetworkUtils.getData(mUrl));
         }
     }
 }
