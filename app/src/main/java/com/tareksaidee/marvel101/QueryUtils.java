@@ -72,13 +72,47 @@ public class QueryUtils {
                 JSONObject cover = curr.getJSONObject("thumbnail");
                 String imageUrl = cover.getString("path") + "." + cover.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Comic comic = new Comic(title,id,synop,imageBitmap,pubDate,creators);
+                Comic comic = new Comic(title, id, synop, imageBitmap, pubDate, creators);
                 comics.add(comic);
             }
         } catch (JSONException e) {
             Log.e("Comic JSON", "Problem parsing the comic JSON results", e);
         }
         return comics;
+    }
+
+    public static ArrayList<Creator> extractCreators(String JSONResponse) {
+
+        ArrayList<Creator> creators = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject(JSONResponse);
+            JSONObject mainObject = jsonObject.getJSONObject("data");
+            JSONArray results = mainObject.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject curr = results.getJSONObject(i);
+                int id = curr.getInt("id");
+                String name = curr.getString("fullName");
+                JSONObject image = curr.getJSONObject("thumbnail");
+                JSONArray events = curr.getJSONObject("events").getJSONArray("items");
+                StringBuilder eventsString = new StringBuilder();
+                for (int x = 0; x < events.length() && x < 5; x++) {
+                    JSONObject event = events.getJSONObject(x);
+                    eventsString.append(event.getString("name"));
+                    eventsString.append("\n");
+                }
+                String imageUrl = image.getString("path") + "." + image.getString("extension");
+                Bitmap imageBitmap = getBitmapFromURL(imageUrl);
+                Creator creator = new Creator(name, id, imageBitmap, eventsString.toString());
+                creators.add(creator);
+            }
+        } catch (JSONException e) {
+
+            Log.e("character JSON", "Problem parsing the character JSON results", e);
+        }
+
+        // Return the list of earthquakes
+        return creators;
     }
 
     public static String getMD5Hash(String timeStamp) {

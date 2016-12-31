@@ -99,7 +99,7 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
 
         @Override
         public ArrayList<Creator> loadInBackground() {
-            return QueryUtils.extractComics(NetworkUtils.getData(mUrl));
+            return QueryUtils.extractCreators(NetworkUtils.getData(mUrl));
         }
     }
 }

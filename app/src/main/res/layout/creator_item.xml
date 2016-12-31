@@ -41,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="Work include"
+            android:text="Works include"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -49,9 +49,9 @@
         <TextView
             android:id="@+id/creator_events"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:gravity="center"
             tools:text="Civil war\nHouse of M\nCaptain America" />
     </LinearLayout>
 
