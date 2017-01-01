@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,7 +67,7 @@ public class QueryUtils {
                 String synop = curr.getString("description");
                 String creators = getCreators(curr);
                 //TODO fix date
-                String pubDate = "12/12/2012"; //getDate(curr);
+                String pubDate = getDate(curr);
                 JSONObject cover = curr.getJSONObject("thumbnail");
                 String imageUrl = cover.getString("path") + "." + cover.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
@@ -177,15 +176,15 @@ public class QueryUtils {
         JSONArray dates = curr.getJSONArray("dates");
         if (dates.length() != 0 && dates.getJSONObject(0).getString("type").equals("onsaleDate")) {
             String weirdDate = dates.getJSONObject(0).getString("date");
-            SimpleDateFormat sdf = new SimpleDateFormat(weirdDate);
-            SimpleDateFormat output = (SimpleDateFormat) DateFormat.getDateInstance();
-            Date d = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+            Date date = new Date();
             try {
-                d = sdf.parse(weirdDate);
+                date = sdf.parse(weirdDate);
             } catch (ParseException e) {
-                Log.e("date", "couldn't parse weird date");
+                Log.e("comics date", "couldn't parse weird date");
             }
-            return output.format(d);
+            sdf = new SimpleDateFormat("MM-dd-yyyy");
+            return sdf.format(date);
         }
         return "";
     }
