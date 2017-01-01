@@ -115,6 +115,10 @@ public class QueryUtils {
         return creators;
     }
 
+    public static ArrayList<Event> extractEvents(String JSONResponse){
+
+    }
+
     public static String getMD5Hash(String timeStamp) {
         StringBuilder sb = new StringBuilder();
         try {
