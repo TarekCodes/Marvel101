@@ -26,7 +26,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
     public View getView(int position, View convertView, ViewGroup parent) {
         View listItemView = convertView;
         if (listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.comic_item, parent, false);
+            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.event_item, parent, false);
         }
         Event event = (Event) getItem(position);
         ImageView image = (ImageView) listItemView.findViewById(R.id.event_image);

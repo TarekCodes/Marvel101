@@ -115,8 +115,34 @@ public class QueryUtils {
         return creators;
     }
 
-    public static ArrayList<Event> extractEvents(String JSONResponse){
+    public static ArrayList<Event> extractEvents(String JSONResponse) {
+        ArrayList<Event> events = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(JSONResponse);
+            JSONObject mainObject = jsonObject.getJSONObject("data");
+            JSONArray results = mainObject.getJSONArray("results");
+            for (int i = 0; i < results.length(); i++) {
+                JSONObject curr = results.getJSONObject(i);
+                int id = curr.getInt("id");
+                String title = curr.getString("title");
+                String descrp = curr.getString("description");
+                JSONObject image = curr.getJSONObject("thumbnail");
+                String startDate = curr.getString("start");
+                startDate = eventDateFormat(startDate);
+                String endDate = curr.getString("end");
+                endDate = eventDateFormat(endDate);
+                String nextEvent = curr.getJSONObject("next").getString("name");
+                String prevEvent = curr.getJSONObject("previous").getString("name");
+                String imageUrl = image.getString("path") + "." + image.getString("extension");
+                Bitmap imageBitmap = getBitmapFromURL(imageUrl);
+                Event event = new Event(title, id, descrp, imageBitmap, startDate, endDate, nextEvent, prevEvent);
+                events.add(event);
+            }
+        } catch (JSONException e) {
 
+            Log.e("character JSON", "Problem parsing the character JSON results", e);
+        }
+        return events;
     }
 
     public static String getMD5Hash(String timeStamp) {
@@ -162,5 +188,17 @@ public class QueryUtils {
             return output.format(d);
         }
         return "";
+    }
+
+    private static String eventDateFormat(String weirdDate){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = new Date();
+        try {
+            date = sdf.parse(weirdDate);
+        } catch (ParseException e) {
+            Log.e("date", "couldn't parse weird date");
+        }
+        sdf = new SimpleDateFormat("MM-dd-yyyy");
+        return sdf.format(date);
     }
 }
