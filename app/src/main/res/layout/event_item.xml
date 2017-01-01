@@ -6,7 +6,7 @@
     android:orientation="horizontal">
 
     <ImageView
-        android:id="@+id/comic_cover"
+        android:id="@+id/event_image"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
@@ -57,7 +57,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/comic_pub_date"
+            android:id="@+id/event_period"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

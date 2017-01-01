@@ -58,4 +58,8 @@ public class Event {
     public String getPrevEvent() {
         return mPrevEvent;
     }
+
+    public String getEventPeriod(){
+        return mStartDate + " - " + mEndDate;
+    }
 }
