@@ -2,6 +2,8 @@ package com.tareksaidee.marvel101;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,9 +14,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -30,6 +36,8 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
     EditText comicSearchBox;
     Button searchButton;
     CheckBox startsWithCheck;
+    TextView emptyView;
+    ProgressBar progressBar;
 
 
     public ComicsSearchFragment() {
@@ -43,13 +51,27 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         View rootView = inflater.inflate(R.layout.fragment_comics_search, container, false);
         listView = (ListView) rootView.findViewById(R.id.list);
         comicSearchBox = (EditText) rootView.findViewById(R.id.char_search_box);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(GONE);
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         searchButton = (Button) rootView.findViewById(R.id.start_search_button);
         startsWithCheck = (CheckBox) rootView.findViewById(R.id.starts_with_check);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLoaderManager().destroyLoader(COMICS_LOADER_ID);
-                getLoaderManager().initLoader(COMICS_LOADER_ID, null, ComicsSearchFragment.this);
+                if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+                    getLoaderManager().destroyLoader(COMICS_LOADER_ID);
+                    getLoaderManager().initLoader(COMICS_LOADER_ID, null, ComicsSearchFragment.this);
+                    emptyView.setText("");
+                    listView.setEmptyView(emptyView);
+                    progressBar.setVisibility(View.VISIBLE);
+                } else {
+                    progressBar.setVisibility(GONE);
+                    emptyView.setText("No Internet Connection");
+                }
             }
         });
         return rootView;
@@ -79,6 +101,8 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         comics = data;
         adapter = new ComicAdapter(getContext(), comics);
         listView.setAdapter(adapter);
+        emptyView.setText("No Comics Found");
+        progressBar.setVisibility(GONE);
     }
 
     @Override

@@ -4,10 +4,15 @@ import android.app.LoaderManager;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.content.Loader;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -19,14 +24,28 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     ArrayList<Character> characters;
     CharacterAdapter adapter;
     ListView listView;
+    TextView emptyView;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_characters);
         listView = (ListView) findViewById(R.id.list);
-        LoaderManager loaderManager = getLoaderManager();
-        loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
+        emptyView = (TextView) findViewById(R.id.empty_view);
+        progressBar = (ProgressBar) findViewById(R.id.progress_bar);
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if(activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
+            listView.setEmptyView(emptyView);
+        }
+        else{
+            progressBar.setVisibility(View.GONE);
+            emptyView.setText("No Internet Connection");
+        }
     }
 
     @Override
@@ -46,6 +65,8 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         characters = data;
         adapter = new CharacterAdapter(CharactersActivity.this, characters);
         listView.setAdapter(adapter);
+        emptyView.setText("No Characters Found");
+        progressBar.setVisibility(View.GONE);
     }
 
     @Override

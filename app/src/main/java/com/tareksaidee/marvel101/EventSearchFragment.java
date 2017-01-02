@@ -2,6 +2,8 @@ package com.tareksaidee.marvel101;
 
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,9 +15,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.view.View.GONE;
 
 
 /**
@@ -31,6 +37,8 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
     EditText eventSearchBox;
     Button searchButton;
     CheckBox startsWithCheck;
+    TextView emptyView;
+    ProgressBar progressBar;
 
     public EventSearchFragment() {
         // Required empty public constructor
@@ -44,12 +52,26 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
         listView = (ListView) rootView.findViewById(R.id.list);
         eventSearchBox = (EditText) rootView.findViewById(R.id.event_search_box);
         searchButton = (Button) rootView.findViewById(R.id.start_search_button);
+        emptyView = (TextView) rootView.findViewById(R.id.empty_view);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        progressBar.setVisibility(GONE);
+        ConnectivityManager cm =
+                (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         startsWithCheck = (CheckBox) rootView.findViewById(R.id.starts_with_check);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getLoaderManager().destroyLoader(EVENTS_LOADER_ID);
-                getLoaderManager().initLoader(EVENTS_LOADER_ID, null, EventSearchFragment.this);
+                if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+                    getLoaderManager().destroyLoader(EVENTS_LOADER_ID);
+                    getLoaderManager().initLoader(EVENTS_LOADER_ID, null, EventSearchFragment.this);
+                    emptyView.setText("");
+                    listView.setEmptyView(emptyView);
+                    progressBar.setVisibility(View.VISIBLE);
+                } else {
+                    progressBar.setVisibility(GONE);
+                    emptyView.setText("No Internet Connection");
+                }
             }
         });
         return rootView;
@@ -76,6 +98,8 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
         events = data;
         adapter = new EventAdapter(getContext(), events);
         listView.setAdapter(adapter);
+        emptyView.setText("No Events Found");
+        progressBar.setVisibility(GONE);
     }
 
     @Override

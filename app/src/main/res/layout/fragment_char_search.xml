@@ -1,38 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/darker_gray"
-    android:orientation="vertical">
+    android:background="@android:color/darker_gray">
 
-    <EditText
-        android:id="@+id/char_search_box"
+    <LinearLayout
+        android:id="@+id/input_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:background="@android:color/holo_orange_light"
-        android:hint="character name"
-        android:lines="1" />
+        android:orientation="vertical">
 
-    <CheckBox
-        android:id="@+id/starts_with_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Starts with" />
+        <EditText
+            android:id="@+id/char_search_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="@android:color/holo_orange_light"
+            android:hint="character name"
+            android:lines="1" />
 
-    <Button
-        android:id="@+id/start_search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@android:color/holo_red_dark"
-        android:text="Search" />
+        <CheckBox
+            android:id="@+id/starts_with_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Starts with" />
+
+        <Button
+            android:id="@+id/start_search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/holo_red_dark"
+            android:text="Search" />
+    </LinearLayout>
 
     <ListView
+        android:layout_below="@id/input_layout"
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
     </ListView>
-</LinearLayout>
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:textAppearance="?android:textAppearanceMedium" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>
+
