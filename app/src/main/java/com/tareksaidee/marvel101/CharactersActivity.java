@@ -11,12 +11,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import static android.view.View.GONE;
 
 public class CharactersActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Character>> {
 
@@ -43,21 +46,13 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
             loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
             listView.setEmptyView(emptyView);
         } else {
-            progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(GONE);
             emptyView.setText("No Internet Connection");
         }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Character temp = (Character) adapter.getItem(position);
-                if (!temp.wasClicked()) {
-                    ((TextView) adapter.getView(position, view, parent).findViewById(R.id.character_description)).setMaxLines(20);
-                    temp.gotClicked();
-                }
-                else{
-                    ((TextView) adapter.getView(position, view, parent).findViewById(R.id.character_description)).setMaxLines(3);
-                    temp.unClicked();
-                }
+                updateLayout(view, (Character) adapter.getItem(position));
             }
         });
     }
@@ -80,7 +75,7 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         adapter = new CharacterAdapter(CharactersActivity.this, characters);
         listView.setAdapter(adapter);
         emptyView.setText("No Characters Found");
-        progressBar.setVisibility(View.GONE);
+        progressBar.setVisibility(GONE);
     }
 
     @Override
@@ -106,6 +101,24 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         @Override
         public ArrayList<Character> loadInBackground() {
             return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
+        }
+    }
+
+    private void updateLayout(View tempView, Character temp) {
+        TextView charDescrp = ((TextView) tempView.findViewById(R.id.character_description));
+        TextView comicsNumber = (TextView) tempView.findViewById(R.id.comics_number);
+        Button goToWiki = (Button) tempView.findViewById(R.id.open_wiki_button);
+        if (!temp.wasClicked()) {
+            charDescrp.setMaxLines(20);
+            comicsNumber.setVisibility(View.VISIBLE);
+            if (temp.getWikiURL() != null)
+                goToWiki.setVisibility(View.VISIBLE);
+            temp.gotClicked();
+        } else {
+            charDescrp.setMaxLines(3);
+            comicsNumber.setVisibility(GONE);
+            goToWiki.setVisibility(GONE);
+            temp.unClicked();
         }
     }
 }
