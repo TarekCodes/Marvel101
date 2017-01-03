@@ -7,20 +7,29 @@ import android.graphics.Bitmap;
  */
 
 public class Comic {
+
+    private boolean mClicked = false;
     private String mTitle;
     private int mDigitlaID;
     private String mSynop;
     private Bitmap mCover;
     private String mPubDate;
     private String mCreators;
+    private String mDetailsURL;
+    private String mCollections;
+    private String mPartOfEvent;
 
-    public Comic(String title, int ID, String synop, Bitmap cover, String pubDate, String creators) {
+    public Comic(String title, int ID, String synop, Bitmap cover, String pubDate, String creators,
+                 String detailsURL, String collections, String partOfEvent) {
         mTitle = title;
         mDigitlaID = ID;
         mSynop = synop;
         mCover = cover;
         mPubDate = pubDate;
         mCreators = creators;
+        mDetailsURL = detailsURL;
+        mCollections = collections;
+        mPartOfEvent = partOfEvent;
     }
 
     public String getTitle() {
@@ -44,4 +53,22 @@ public class Comic {
     }
 
     public String getCreators(){return mCreators;}
+
+    public String getDetailsURL(){return mDetailsURL;}
+
+    public String getCollections(){return mCollections;}
+
+    public String getPartOfEvent(){return mPartOfEvent;}
+
+    public void gotClicked(){
+        mClicked = true;
+    }
+
+    public boolean wasClicked(){
+        return mClicked;
+    }
+
+    public void unClicked(){
+        mClicked = false;
+    }
 }
