@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -74,6 +75,12 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
                 }
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                updateLayout(view, adapter.getItem(position));
+            }
+        });
         return rootView;
     }
 
@@ -124,6 +131,21 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
         @Override
         public ArrayList<Creator> loadInBackground() {
             return QueryUtils.extractCreators(NetworkUtils.getData(mUrl));
+        }
+    }
+
+    private void updateLayout(View tempView, Creator temp) {
+        TextView events = ((TextView) tempView.findViewById(R.id.creator_events));
+        Button allComics = (Button) tempView.findViewById(R.id.open_comics_button);
+        if (!temp.wasClicked()) {
+            events.setMaxLines(50);
+            if (temp.getAllComicsURL() != null)
+                allComics.setVisibility(View.VISIBLE);
+            temp.gotClicked();
+        } else {
+            events.setMaxLines(5);
+            allComics.setVisibility(GONE);
+            temp.unClicked();
         }
     }
 }

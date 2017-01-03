@@ -109,6 +109,7 @@ public class QueryUtils {
                 int id = curr.getInt("id");
                 String name = curr.getString("fullName");
                 JSONObject image = curr.getJSONObject("thumbnail");
+                String allComicsURL = findDetailsURL(curr);
                 JSONArray events = curr.getJSONObject("events").getJSONArray("items");
                 StringBuilder eventsString = new StringBuilder();
                 for (int x = 0; x < events.length(); x++) {
@@ -118,7 +119,7 @@ public class QueryUtils {
                 }
                 String imageUrl = image.getString("path") + "." + image.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Creator creator = new Creator(name, id, imageBitmap, eventsString.toString());
+                Creator creator = new Creator(name, id, imageBitmap, eventsString.toString(), allComicsURL);
                 creators.add(creator);
             }
         } catch (JSONException e) {
