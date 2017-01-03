@@ -11,8 +11,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:scaleType="fitXY"
-        android:contentDescription="character image" />
+        android:contentDescription="character image"
+        android:scaleType="fitXY" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -31,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:textSize="22sp"
             android:textStyle="bold"
             tools:text="CAPTAIN AMERICA" />
@@ -39,11 +40,34 @@
             android:id="@+id/character_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
             android:maxLines="3"
             android:textSize="12sp"
             tools:text="A VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDER" />
+
+        <TextView
+            android:id="@+id/comics_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"
+            android:layout_marginTop="8dp"
+            android:text="Apperaed in over "
+            android:textColor="@android:color/holo_red_dark" />
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/open_wiki_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#000000"
+            android:textColor="@android:color/holo_orange_light"
+            android:layout_margin="8dp"
+            android:text="Open Wiki"/>
+
     </LinearLayout>
 
 </LinearLayout>
