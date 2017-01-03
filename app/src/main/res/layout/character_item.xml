@@ -54,7 +54,7 @@
             android:layout_gravity="center"
             android:visibility="gone"
             android:layout_marginTop="8dp"
-            android:text=""
+            tools:text="available comics"
             android:textColor="@android:color/holo_red_dark" />
 
         <Button

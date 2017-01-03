@@ -29,9 +29,9 @@
             android:id="@+id/comic_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:textSize="22sp"
             android:textStyle="bold"
             tools:text="CAPTAIN AMERICA #1" />
@@ -40,9 +40,9 @@
             android:id="@+id/comic_synopsis"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:ellipsize="end"
             android:fontFamily="sans-serif-medium"
+            android:gravity="center"
             android:maxLines="3"
             android:textSize="12sp"
             tools:text="A VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDER" />
@@ -68,17 +68,69 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:layout_gravity="center"
-            android:textStyle="bold"
+            android:layout_marginTop="8dp"
+            android:text="Published"
             android:textColor="@android:color/holo_red_dark"
-            android:text="Published"/>
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/comic_pub_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            tools:text="10/22/2016"/>
+            tools:text="10/22/2016" />
+
+        <LinearLayout
+            android:id="@+id/expandable_views_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/part_of_events_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="Part of"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/part_of_events"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/collections_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="Collections"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/comics_collection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center" />
+
+            <Button
+                android:id="@+id/open_details_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="#000000"
+                android:focusable="false"
+                android:text="Read and more details"
+                android:textColor="@android:color/holo_orange_light" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
