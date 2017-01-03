@@ -11,9 +11,11 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -74,6 +76,12 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
                 }
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                updateLayout(view, adapter.getItem(position));
+            }
+        });
         return rootView;
     }
 
@@ -124,6 +132,23 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
         @Override
         public ArrayList<Event> loadInBackground() {
             return QueryUtils.extractEvents(NetworkUtils.getData(mUrl));
+        }
+    }
+
+    private void updateLayout(View tempView, Event temp) {
+        TextView descrp = ((TextView) tempView.findViewById(R.id.event_description));
+        Button goToDetails = (Button) tempView.findViewById(R.id.open_details_button);
+        LinearLayout expContainer = (LinearLayout) tempView.findViewById(R.id.expandable_views_container);
+        if (!temp.wasClicked()) {
+            descrp.setMaxLines(20);
+            expContainer.setVisibility(View.VISIBLE);
+            if (temp.getDetailsURL() == null)
+                goToDetails.setVisibility(View.GONE);
+            temp.gotClicked();
+        } else {
+            descrp.setMaxLines(3);
+            expContainer.setVisibility(GONE);
+            temp.unClicked();
         }
     }
 }

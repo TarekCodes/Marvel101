@@ -142,6 +142,7 @@ public class QueryUtils {
                 int id = curr.getInt("id");
                 String title = curr.getString("title");
                 String descrp = curr.getString("description");
+                String detailsURL = findDetailsURL(curr);
                 JSONObject image = curr.getJSONObject("thumbnail");
                 String startDate = curr.getString("start");
                 if (startDate != null)
@@ -158,7 +159,8 @@ public class QueryUtils {
                     prevEvent = curr.getJSONObject("previous").getString("name");
                 String imageUrl = image.getString("path") + "." + image.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Event event = new Event(title, id, descrp, imageBitmap, startDate, endDate, nextEvent, prevEvent);
+                Event event = new Event(title, id, descrp, imageBitmap, startDate, endDate, nextEvent
+                        , prevEvent, detailsURL);
                 events.add(event);
             }
         } catch (JSONException e) {
