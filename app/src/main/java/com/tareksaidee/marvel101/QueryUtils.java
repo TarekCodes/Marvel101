@@ -68,11 +68,26 @@ public class QueryUtils {
                 String title = curr.getString("title");
                 String synop = curr.getString("description");
                 String creators = getCreators(curr);
+                String detailsURL = findDetailsURL(curr);
+                JSONArray collections = curr.getJSONArray("collections");
+                StringBuilder collectionsString = new StringBuilder();
+                for(int x=0;x<collections.length();x++){
+                    JSONObject temp = collections.getJSONObject(x);
+                    collectionsString.append(temp.getString("name"));
+                    collectionsString.append("\n");
+                }
+                StringBuilder eventsString = new StringBuilder();
+                JSONArray events = curr.getJSONObject("events").getJSONArray("items");
+                for(int x = 0;x<events.length();x++){
+                    JSONObject temp = events.getJSONObject(x);
+                    eventsString.append(temp.getString("name"));
+                    eventsString.append("\n");
+                }
                 String pubDate = getDate(curr);
                 JSONObject cover = curr.getJSONObject("thumbnail");
                 String imageUrl = cover.getString("path") + "." + cover.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Comic comic = new Comic(title, id, synop, imageBitmap, pubDate, creators);
+                Comic comic = new Comic(title, id, synop, imageBitmap, pubDate, creators, detailsURL, collectionsString.toString(),eventsString.toString());
                 comics.add(comic);
             }
         } catch (JSONException e) {
@@ -207,6 +222,16 @@ public class QueryUtils {
         for (int i = 0; i < urls.length(); i++) {
             JSONObject temp = urls.getJSONObject(i);
             if (temp.getString("type").equals("wiki"))
+                return temp.getString("url");
+        }
+        return null;
+    }
+
+    private static String findDetailsURL(JSONObject curr) throws JSONException {
+        JSONArray urls = curr.getJSONArray("urls");
+        for (int i = 0; i < urls.length(); i++) {
+            JSONObject temp = urls.getJSONObject(i);
+            if (temp.getString("type").equals("detail"))
                 return temp.getString("url");
         }
         return null;

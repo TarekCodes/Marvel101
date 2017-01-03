@@ -10,9 +10,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -74,6 +76,12 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
                 }
             }
         });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                updateLayout(view, (Comic) adapter.getItem(position));
+            }
+        });
         return rootView;
     }
 
@@ -127,6 +135,23 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         @Override
         public ArrayList<Comic> loadInBackground() {
             return QueryUtils.extractComics(NetworkUtils.getData(mUrl));
+        }
+    }
+
+    private void updateLayout(View tempView, Comic temp) {
+        TextView synop = ((TextView) tempView.findViewById(R.id.comic_synopsis));
+        LinearLayout expContainer = (LinearLayout) tempView.findViewById(R.id.expandable_views_container);
+        Button goToDetails = (Button) tempView.findViewById(R.id.open_details_button);
+        if (!temp.wasClicked()) {
+            synop.setMaxLines(20);
+            expContainer.setVisibility(View.VISIBLE);
+            if (temp.getDetailsURL() == null)
+                goToDetails.setVisibility(View.GONE);
+            temp.gotClicked();
+        } else {
+            synop.setMaxLines(3);
+            expContainer.setVisibility(GONE);
+            temp.unClicked();
         }
     }
 
