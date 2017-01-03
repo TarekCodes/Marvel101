@@ -71,14 +71,14 @@ public class QueryUtils {
                 String detailsURL = findDetailsURL(curr);
                 JSONArray collections = curr.getJSONArray("collections");
                 StringBuilder collectionsString = new StringBuilder();
-                for(int x=0;x<collections.length();x++){
+                for (int x = 0; x < collections.length(); x++) {
                     JSONObject temp = collections.getJSONObject(x);
                     collectionsString.append(temp.getString("name"));
                     collectionsString.append("\n");
                 }
                 StringBuilder eventsString = new StringBuilder();
                 JSONArray events = curr.getJSONObject("events").getJSONArray("items");
-                for(int x = 0;x<events.length();x++){
+                for (int x = 0; x < events.length(); x++) {
                     JSONObject temp = events.getJSONObject(x);
                     eventsString.append(temp.getString("name"));
                     eventsString.append("\n");
@@ -87,7 +87,7 @@ public class QueryUtils {
                 JSONObject cover = curr.getJSONObject("thumbnail");
                 String imageUrl = cover.getString("path") + "." + cover.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Comic comic = new Comic(title, id, synop, imageBitmap, pubDate, creators, detailsURL, collectionsString.toString(),eventsString.toString());
+                Comic comic = new Comic(title, id, synop, imageBitmap, pubDate, creators, detailsURL, collectionsString.toString(), eventsString.toString());
                 comics.add(comic);
             }
         } catch (JSONException e) {
@@ -144,11 +144,18 @@ public class QueryUtils {
                 String descrp = curr.getString("description");
                 JSONObject image = curr.getJSONObject("thumbnail");
                 String startDate = curr.getString("start");
-                startDate = eventDateFormat(startDate);
+                if (startDate != null)
+                    startDate = eventDateFormat(startDate);
                 String endDate = curr.getString("end");
-                endDate = eventDateFormat(endDate);
-                String nextEvent = curr.getJSONObject("next").getString("name");
-                String prevEvent = curr.getJSONObject("previous").getString("name");
+                if (endDate != null)
+                    endDate = eventDateFormat(endDate);
+                String nextEvent = "Unavailable";
+                if (!curr.isNull("next")) {
+                    nextEvent = curr.getJSONObject("next").getString("name");
+                }
+                String prevEvent = "Unavailable";
+                if (!curr.isNull("previous"))
+                    prevEvent = curr.getJSONObject("previous").getString("name");
                 String imageUrl = image.getString("path") + "." + image.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
                 Event event = new Event(title, id, descrp, imageBitmap, startDate, endDate, nextEvent, prevEvent);
