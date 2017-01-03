@@ -111,7 +111,7 @@ public class QueryUtils {
                 JSONObject image = curr.getJSONObject("thumbnail");
                 JSONArray events = curr.getJSONObject("events").getJSONArray("items");
                 StringBuilder eventsString = new StringBuilder();
-                for (int x = 0; x < events.length() && x < 5; x++) {
+                for (int x = 0; x < events.length(); x++) {
                     JSONObject event = events.getJSONObject(x);
                     eventsString.append(event.getString("name"));
                     eventsString.append("\n");

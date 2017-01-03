@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 
 public class Creator {
 
+    private boolean mClicked = false;
     private String mName;
     private int mDigitlaID;
     private Bitmap mImage;
@@ -42,4 +43,15 @@ public class Creator {
         return mAllComicsURL;
     }
 
+    public void gotClicked() {
+        mClicked = true;
+    }
+
+    public boolean wasClicked() {
+        return mClicked;
+    }
+
+    public void unClicked() {
+        mClicked = false;
+    }
 }

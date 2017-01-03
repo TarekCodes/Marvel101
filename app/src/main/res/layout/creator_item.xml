@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:maxLines="5"
             tools:text="Civil war\nHouse of M\nCaptain America" />
 
         <Button
