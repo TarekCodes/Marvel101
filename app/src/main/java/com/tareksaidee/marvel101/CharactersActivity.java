@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,15 +38,28 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if(activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
             LoaderManager loaderManager = getLoaderManager();
             loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
             listView.setEmptyView(emptyView);
-        }
-        else{
+        } else {
             progressBar.setVisibility(View.GONE);
             emptyView.setText("No Internet Connection");
         }
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Character temp = (Character) adapter.getItem(position);
+                if (!temp.wasClicked()) {
+                    ((TextView) adapter.getView(position, view, parent).findViewById(R.id.character_description)).setMaxLines(20);
+                    temp.gotClicked();
+                }
+                else{
+                    ((TextView) adapter.getView(position, view, parent).findViewById(R.id.character_description)).setMaxLines(3);
+                    temp.unClicked();
+                }
+            }
+        });
     }
 
     @Override

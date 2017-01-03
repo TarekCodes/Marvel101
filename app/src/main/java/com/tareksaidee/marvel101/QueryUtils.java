@@ -39,10 +39,12 @@ public class QueryUtils {
                 int id = curr.getInt("id");
                 String name = curr.getString("name");
                 String descrp = curr.getString("description");
+                int availableComics = curr.getJSONObject("comics").getInt("available");
+                String wikiURL = findWikiURL(curr);
                 JSONObject image = curr.getJSONObject("thumbnail");
                 String imageUrl = image.getString("path") + "." + image.getString("extension");
                 Bitmap imageBitmap = getBitmapFromURL(imageUrl);
-                Character character = new Character(name, id, descrp, imageBitmap);
+                Character character = new Character(name, id, descrp, imageBitmap, availableComics, wikiURL);
                 characters.add(character);
             }
         } catch (JSONException e) {
@@ -66,7 +68,6 @@ public class QueryUtils {
                 String title = curr.getString("title");
                 String synop = curr.getString("description");
                 String creators = getCreators(curr);
-                //TODO fix date
                 String pubDate = getDate(curr);
                 JSONObject cover = curr.getJSONObject("thumbnail");
                 String imageUrl = cover.getString("path") + "." + cover.getString("extension");
@@ -189,7 +190,7 @@ public class QueryUtils {
         return "";
     }
 
-    private static String eventDateFormat(String weirdDate){
+    private static String eventDateFormat(String weirdDate) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
         try {
@@ -199,5 +200,15 @@ public class QueryUtils {
         }
         sdf = new SimpleDateFormat("MM-dd-yyyy");
         return sdf.format(date);
+    }
+
+    private static String findWikiURL(JSONObject curr) throws JSONException {
+        JSONArray urls = curr.getJSONArray("urls");
+        for (int i = 0; i < urls.length(); i++) {
+            JSONObject temp = urls.getJSONObject(i);
+            if (temp.getString("type").equals("wiki"))
+                return temp.getString("url");
+        }
+        return null;
     }
 }
