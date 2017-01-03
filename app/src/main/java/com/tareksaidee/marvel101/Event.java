@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
  */
 
 public class Event {
+
+    private boolean mClicked = false;
     private String mTitle;
     private int mID;
     private String mDescrp;
@@ -15,8 +17,10 @@ public class Event {
     private String mEndDate;
     private String mNextEvent;
     private String mPrevEvent;
+    private String mDetailsURL;
 
-    public Event(String title, int ID, String descrp, Bitmap image, String startDate, String endDate, String nextEvent, String prevEvent) {
+    public Event(String title, int ID, String descrp, Bitmap image, String startDate, String endDate
+            , String nextEvent, String prevEvent, String detailsURL) {
         mTitle = title;
         mID = ID;
         mDescrp = descrp;
@@ -25,6 +29,7 @@ public class Event {
         mEndDate = endDate;
         mNextEvent = nextEvent;
         mPrevEvent = prevEvent;
+        mDetailsURL = detailsURL;
     }
 
     public String getTitle() {
@@ -59,7 +64,23 @@ public class Event {
         return mPrevEvent;
     }
 
-    public String getEventPeriod(){
+    public String getEventPeriod() {
         return mStartDate + " - " + mEndDate;
+    }
+
+    public String getDetailsURL() {
+        return mDetailsURL;
+    }
+
+    public void gotClicked() {
+        mClicked = true;
+    }
+
+    public boolean wasClicked() {
+        return mClicked;
+    }
+
+    public void unClicked() {
+        mClicked = false;
     }
 }
