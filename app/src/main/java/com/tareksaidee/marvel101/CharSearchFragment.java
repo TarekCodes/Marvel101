@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -73,6 +74,13 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
                 }
             }
         });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                updateLayout(view, (Character) adapter.getItem(position));
+            }
+        });
         return rootView;
     }
 
@@ -124,6 +132,24 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         @Override
         public ArrayList<Character> loadInBackground() {
             return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
+        }
+    }
+
+    private void updateLayout(View tempView, Character temp) {
+        TextView charDescrp = ((TextView) tempView.findViewById(R.id.character_description));
+        TextView comicsNumber = (TextView) tempView.findViewById(R.id.comics_number);
+        Button goToWiki = (Button) tempView.findViewById(R.id.open_wiki_button);
+        if (!temp.wasClicked()) {
+            charDescrp.setMaxLines(20);
+            comicsNumber.setVisibility(View.VISIBLE);
+            if (temp.getWikiURL() != null)
+                goToWiki.setVisibility(View.VISIBLE);
+            temp.gotClicked();
+        } else {
+            charDescrp.setMaxLines(3);
+            comicsNumber.setVisibility(GONE);
+            goToWiki.setVisibility(GONE);
+            temp.unClicked();
         }
     }
 }
