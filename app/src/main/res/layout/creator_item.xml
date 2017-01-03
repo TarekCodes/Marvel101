@@ -53,6 +53,18 @@
             android:layout_gravity="center"
             android:gravity="center"
             tools:text="Civil war\nHouse of M\nCaptain America" />
+
+        <Button
+            android:id="@+id/open_comics_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:background="#000000"
+            android:focusable="false"
+            android:text="View all comics"
+            android:textColor="@android:color/holo_orange_light"
+            android:visibility="gone" />
     </LinearLayout>
 
 </LinearLayout>

@@ -12,12 +12,14 @@ public class Creator {
     private int mDigitlaID;
     private Bitmap mImage;
     private String mEvents;
+    private String mAllComicsURL;
 
-    public Creator(String name, int ID, Bitmap image, String events) {
+    public Creator(String name, int ID, Bitmap image, String events, String allComicsURL) {
         mName = name;
         mDigitlaID = ID;
         mImage = image;
         mEvents = events;
+        mAllComicsURL = allComicsURL;
     }
 
     public String getName() {
@@ -34,6 +36,10 @@ public class Creator {
 
     public String getEvents() {
         return mEvents;
+    }
+
+    public String getAllComicsURL() {
+        return mAllComicsURL;
     }
 
 }
