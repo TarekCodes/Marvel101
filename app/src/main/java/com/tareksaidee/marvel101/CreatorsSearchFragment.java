@@ -11,6 +11,7 @@ import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -73,6 +74,9 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
                     progressBar.setVisibility(GONE);
                     emptyView.setText("No Internet Connection");
                 }
+                //close keyboard
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(creatorSearchBox.getWindowToken(), 0);
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -72,6 +73,9 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
                     progressBar.setVisibility(GONE);
                     emptyView.setText("No Internet Connection");
                 }
+                //close keyboard
+                InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(charSearchBox.getWindowToken(), 0);
             }
         });
 
@@ -81,6 +85,7 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
                 updateLayout(view, (Character) adapter.getItem(position));
             }
         });
+
         return rootView;
     }
 

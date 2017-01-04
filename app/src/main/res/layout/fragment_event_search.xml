@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
     tools:context="com.tareksaidee.marvel101.EventSearchFragment">
 
     <LinearLayout
@@ -20,20 +21,28 @@
             android:hint="event name"
             android:lines="1" />
 
-        <CheckBox
-            android:id="@+id/starts_with_check"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="Starts with" />
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/start_search_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@android:color/holo_red_dark"
-            android:text="Search" />
+            <Button
+                android:id="@+id/start_search_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/holo_red_dark"
+                android:text="Search" />
+
+            <CheckBox
+                android:id="@+id/starts_with_check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Starts with" />
+        </LinearLayout>
 
     </LinearLayout>
 
