@@ -8,10 +8,11 @@
     <ImageView
         android:id="@+id/event_image"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
         android:layout_weight="1"
-        android:contentDescription="comic cover"
-        android:scaleType="fitXY" />
+        android:adjustViewBounds="true"
+        android:contentDescription="comic cover" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -64,11 +65,11 @@
             tools:text="10/22/2016 - 10/22/2017" />
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/expandable_views_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -111,11 +112,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="#000000"
-                android:textColor="@android:color/holo_orange_light"
                 android:layout_margin="8dp"
+                android:background="#000000"
                 android:focusable="false"
-                android:text="View all details"/>
+                android:text="View all details"
+                android:textColor="@android:color/holo_orange_light" />
         </LinearLayout>
     </LinearLayout>
 

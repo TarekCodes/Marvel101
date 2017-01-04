@@ -9,10 +9,11 @@
     <ImageView
         android:id="@+id/character_image"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
         android:layout_weight="1"
-        android:contentDescription="character image"
-        android:scaleType="fitXY" />
+        android:adjustViewBounds="true"
+        android:contentDescription="character image" />
 
     <LinearLayout
         android:layout_width="0dp"
@@ -52,22 +53,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:visibility="gone"
             android:layout_marginTop="8dp"
-            tools:text="available comics"
-            android:textColor="@android:color/holo_red_dark" />
+            android:textColor="@android:color/holo_red_dark"
+            android:visibility="gone"
+            tools:text="available comics" />
 
         <Button
-            android:visibility="gone"
             android:id="@+id/open_wiki_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#000000"
-            android:textColor="@android:color/holo_orange_light"
             android:layout_margin="8dp"
+            android:background="#000000"
             android:focusable="false"
-            android:text="Open Wiki"/>
+            android:text="Open Wiki"
+            android:textColor="@android:color/holo_orange_light"
+            android:visibility="gone" />
 
     </LinearLayout>
 
