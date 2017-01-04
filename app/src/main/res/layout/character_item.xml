@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="92dp"
-    android:background="#000000"
+    android:background="@color/colorPrimaryDark"
     android:orientation="horizontal">
 
     <ImageView

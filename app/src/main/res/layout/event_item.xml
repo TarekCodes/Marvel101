@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/colorPrimaryDark"
     android:orientation="horizontal">
 
     <ImageView
@@ -32,6 +33,7 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold"
             tools:text="Civil War" />
@@ -44,6 +46,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:maxLines="3"
+            android:textColor="#ffffff"
             android:textSize="12sp"
             tools:text="A VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDER" />
 
@@ -62,6 +65,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="#ffffff"
             tools:text="10/22/2016 - 10/22/2017" />
 
         <LinearLayout
@@ -87,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textColor="#ffffff"
                 tools:text="House of M" />
 
             <TextView
@@ -105,6 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textColor="#ffffff"
                 tools:text="Dark Reign" />
 
             <Button

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="96dp"
+    android:background="@color/colorPrimaryDark"
     android:orientation="horizontal">
 
     <ImageView
@@ -33,6 +33,7 @@
             android:layout_marginBottom="8dp"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
+            android:textColor="#ffffff"
             android:textSize="22sp"
             android:textStyle="bold"
             tools:text="CAPTAIN AMERICA #1" />
@@ -45,6 +46,7 @@
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
             android:maxLines="3"
+            android:textColor="#ffffff"
             android:textSize="12sp"
             tools:text="A VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDER" />
 
@@ -64,6 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
+            android:textColor="#ffffff"
             tools:text="Writer: Stan Lee, Art: Jack Kirby, Writer: Stan Lee, Art: Jack Kirby, Writer: Stan Lee, Art: Jack Kirby, " />
 
         <TextView
@@ -79,12 +82,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="#ffffff"
             tools:text="10/22/2016" />
 
         <LinearLayout
             android:id="@+id/expandable_views_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:orientation="vertical">
 
             <TextView
@@ -102,7 +107,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:textColor="#ffffff" />
 
             <TextView
                 android:id="@+id/collections_header"
@@ -119,7 +125,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="8dp"
+                android:textColor="#ffffff" />
 
             <Button
                 android:id="@+id/open_details_button"
@@ -131,6 +138,7 @@
                 android:focusable="false"
                 android:text="Read and more details"
                 android:textColor="@android:color/holo_orange_light" />
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
