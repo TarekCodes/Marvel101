@@ -2,6 +2,7 @@ package com.tareksaidee.marvel101;
 
 import android.graphics.Bitmap;
 import android.util.Log;
+import android.util.Pair;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,14 +27,15 @@ public class QueryUtils {
     }
 
 
-    public static ArrayList<Character> extractCharacters(String JSONResponse) {
+    public static Pair<ArrayList<Character>, Integer> extractCharacters(String JSONResponse) {
 
         ArrayList<Character> characters = new ArrayList<>();
-
+        Integer total = 0;
         try {
             JSONObject jsonObject = new JSONObject(JSONResponse);
             JSONObject mainObject = jsonObject.getJSONObject("data");
             JSONArray results = mainObject.getJSONArray("results");
+            total = mainObject.getInt("total");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject curr = results.getJSONObject(i);
                 int id = curr.getInt("id");
@@ -53,7 +55,7 @@ public class QueryUtils {
         }
 
         // Return the list of earthquakes
-        return characters;
+        return new Pair<>(characters,total);
     }
 
     public static ArrayList<Comic> extractComics(String JSONResponse) {

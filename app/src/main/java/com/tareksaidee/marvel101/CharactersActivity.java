@@ -9,6 +9,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -21,7 +22,7 @@ import java.util.Calendar;
 
 import static android.view.View.GONE;
 
-public class CharactersActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<Character>> {
+public class CharactersActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Pair<ArrayList<Character>, Integer>> {
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/characters";
     private static final int CHARACTER_LOADER_ID = 1;
@@ -58,7 +59,7 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    public Loader<ArrayList<Character>> onCreateLoader(int id, Bundle args) {
+    public Loader<Pair<ArrayList<Character>, Integer>> onCreateLoader(int id, Bundle args) {
         Uri baseUri = Uri.parse(QUERY_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
@@ -70,8 +71,8 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Character>> loader, ArrayList<Character> data) {
-        characters = data;
+    public void onLoadFinished(Loader<Pair<ArrayList<Character>, Integer>> loader, Pair<ArrayList<Character>, Integer> data) {
+        characters = data.first;
         adapter = new CharacterAdapter(CharactersActivity.this, characters);
         listView.setAdapter(adapter);
         emptyView.setText("No Characters Found");
@@ -79,12 +80,12 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Character>> loader) {
+    public void onLoaderReset(Loader<Pair<ArrayList<Character>, Integer>> loader) {
         adapter.clear();
     }
 
 
-    private static class CharacterLoader extends AsyncTaskLoader<ArrayList<Character>> {
+    private static class CharacterLoader extends AsyncTaskLoader<Pair<ArrayList<Character>, Integer>> {
 
         private String mUrl;
 
@@ -99,7 +100,7 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         }
 
         @Override
-        public ArrayList<Character> loadInBackground() {
+        public Pair<ArrayList<Character>, Integer> loadInBackground() {
             return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
         }
     }
