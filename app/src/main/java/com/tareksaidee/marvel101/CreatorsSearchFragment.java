@@ -57,6 +57,7 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
         emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         progressBar.setVisibility(GONE);
+        emptyView.setVisibility(GONE);
         ConnectivityManager cm =
                 (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         final NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
