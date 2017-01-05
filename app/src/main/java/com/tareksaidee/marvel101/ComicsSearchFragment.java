@@ -7,6 +7,7 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ import static android.view.View.GONE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ComicsSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Comic>> {
+public class ComicsSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<Pair<ArrayList<Comic>, Integer>> {
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/comics";
     private static int COMICS_LOADER_ID = 1;
@@ -92,7 +93,7 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
 
 
     @Override
-    public android.support.v4.content.Loader<ArrayList<Comic>> onCreateLoader(int id, Bundle args) {
+    public android.support.v4.content.Loader<Pair<ArrayList<Comic>, Integer>> onCreateLoader(int id, Bundle args) {
         Uri baseUri = Uri.parse(QUERY_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
@@ -110,8 +111,8 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
     }
 
     @Override
-    public void onLoadFinished(android.support.v4.content.Loader<ArrayList<Comic>> loader, ArrayList<Comic> data) {
-        comics = data;
+    public void onLoadFinished(android.support.v4.content.Loader<Pair<ArrayList<Comic>, Integer>> loader, Pair<ArrayList<Comic>, Integer> data) {
+        comics = data.first;
         adapter = new ComicAdapter(getContext(), comics);
         listView.setAdapter(adapter);
         emptyView.setText("No Comics Found");
@@ -119,11 +120,11 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
     }
 
     @Override
-    public void onLoaderReset(android.support.v4.content.Loader<ArrayList<Comic>> loader) {
+    public void onLoaderReset(android.support.v4.content.Loader<Pair<ArrayList<Comic>, Integer>> loader) {
         adapter.clear();
     }
 
-    private static class ComicsLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<Comic>> {
+    private static class ComicsLoader extends android.support.v4.content.AsyncTaskLoader<Pair<ArrayList<Comic>, Integer>> {
 
         private String mUrl;
 
@@ -138,7 +139,7 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         }
 
         @Override
-        public ArrayList<Comic> loadInBackground() {
+        public Pair<ArrayList<Comic>, Integer> loadInBackground() {
             return QueryUtils.extractComics(NetworkUtils.getData(mUrl));
         }
     }

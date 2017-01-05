@@ -70,8 +70,6 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         nextPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //store offset in temp because it will get reset with search button click and you
-                //only want that to happen when the search button is physically clicked.
                 offset += LIMIT;
                 artificialClick = true;
                 searchButton.performClick();
@@ -80,8 +78,6 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         previousPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //store offset in temp because it will get reset with search button click and you
-                //only want that to happen when the search button is physically clicked.
                 offset -= LIMIT;
                 artificialClick = true;
                 searchButton.performClick();

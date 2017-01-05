@@ -55,15 +55,17 @@ public class QueryUtils {
         }
 
         // Return the list of earthquakes
-        return new Pair<>(characters,total);
+        return new Pair<>(characters, total);
     }
 
-    public static ArrayList<Comic> extractComics(String JSONResponse) {
+    public static Pair<ArrayList<Comic>, Integer> extractComics(String JSONResponse) {
         ArrayList<Comic> comics = new ArrayList<>();
+        Integer total = 0;
         try {
             JSONObject jsonObject = new JSONObject(JSONResponse);
             JSONObject mainObject = jsonObject.getJSONObject("data");
             JSONArray results = mainObject.getJSONArray("results");
+            total = mainObject.getInt("total");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject curr = results.getJSONObject(i);
                 int id = curr.getInt("digitalId");
@@ -95,17 +97,18 @@ public class QueryUtils {
         } catch (JSONException e) {
             Log.e("Comic JSON", "Problem parsing the comic JSON results", e);
         }
-        return comics;
+        return new Pair<>(comics, total);
     }
 
-    public static ArrayList<Creator> extractCreators(String JSONResponse) {
+    public static Pair<ArrayList<Creator>, Integer> extractCreators(String JSONResponse) {
 
         ArrayList<Creator> creators = new ArrayList<>();
-
+        Integer total = 0;
         try {
             JSONObject jsonObject = new JSONObject(JSONResponse);
             JSONObject mainObject = jsonObject.getJSONObject("data");
             JSONArray results = mainObject.getJSONArray("results");
+            total = mainObject.getInt("total");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject curr = results.getJSONObject(i);
                 int id = curr.getInt("id");
@@ -130,11 +133,12 @@ public class QueryUtils {
         }
 
         // Return the list of earthquakes
-        return creators;
+        return new Pair<>(creators, total);
     }
 
-    public static ArrayList<Event> extractEvents(String JSONResponse) {
+    public static Pair<ArrayList<Event>, Integer> extractEvents(String JSONResponse) {
         ArrayList<Event> events = new ArrayList<>();
+        Integer total = 0;
         try {
             JSONObject jsonObject = new JSONObject(JSONResponse);
             JSONObject mainObject = jsonObject.getJSONObject("data");
@@ -169,7 +173,7 @@ public class QueryUtils {
 
             Log.e("character JSON", "Problem parsing the character JSON results", e);
         }
-        return events;
+        return new Pair<>(events, total);
     }
 
     public static String getMD5Hash(String timeStamp) {

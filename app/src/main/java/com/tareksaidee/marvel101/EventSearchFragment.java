@@ -8,6 +8,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.Loader;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +31,7 @@ import static android.view.View.GONE;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class EventSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<ArrayList<Event>> {
+public class EventSearchFragment extends Fragment implements android.support.v4.app.LoaderManager.LoaderCallbacks<Pair<ArrayList<Event>, Integer>> {
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/events";
     private static int EVENTS_LOADER_ID = 5;
@@ -91,7 +92,7 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
     }
 
     @Override
-    public Loader<ArrayList<Event>> onCreateLoader(int id, Bundle args) {
+    public Loader<Pair<ArrayList<Event>, Integer>> onCreateLoader(int id, Bundle args) {
         Uri baseUri = Uri.parse(QUERY_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
@@ -107,8 +108,8 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
     }
 
     @Override
-    public void onLoadFinished(Loader<ArrayList<Event>> loader, ArrayList<Event> data) {
-        events = data;
+    public void onLoadFinished(Loader<Pair<ArrayList<Event>, Integer>> loader, Pair<ArrayList<Event>, Integer> data) {
+        events = data.first;
         adapter = new EventAdapter(getContext(), events);
         listView.setAdapter(adapter);
         emptyView.setText("No Events Found");
@@ -116,11 +117,11 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
     }
 
     @Override
-    public void onLoaderReset(Loader<ArrayList<Event>> loader) {
+    public void onLoaderReset(Loader<Pair<ArrayList<Event>, Integer>> loader) {
         adapter.clear();
     }
 
-    private static class EventsLoader extends android.support.v4.content.AsyncTaskLoader<ArrayList<Event>> {
+    private static class EventsLoader extends android.support.v4.content.AsyncTaskLoader<Pair<ArrayList<Event>, Integer>> {
 
         private String mUrl;
 
@@ -135,7 +136,7 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
         }
 
         @Override
-        public ArrayList<Event> loadInBackground() {
+        public Pair<ArrayList<Event>, Integer> loadInBackground() {
             return QueryUtils.extractEvents(NetworkUtils.getData(mUrl));
         }
     }
