@@ -11,6 +11,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getName();
     Button charactersButton;
     Button searchButton;
+    Button comicsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
         charactersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), CharactersActivity.class);
+                Intent intent = new Intent(getApplicationContext(), CharactersBrowse.class);
                 startActivity(intent);
             }
         });
@@ -29,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
+        comicsButton = (Button) findViewById(R.id.comics_button);
+        comicsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ComicsBrowse.class);
                 startActivity(intent);
             }
         });

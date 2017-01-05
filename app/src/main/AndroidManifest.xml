@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CharactersActivity" />
+        <activity android:name=".CharactersBrowse" />
+        <activity android:name=".ComicsBrowse" />
         <activity
             android:name=".SearchActivity"
             android:screenOrientation="portrait"/>

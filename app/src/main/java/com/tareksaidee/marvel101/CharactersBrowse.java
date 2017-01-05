@@ -23,7 +23,7 @@ import java.util.Calendar;
 
 import static android.view.View.GONE;
 
-public class CharactersActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Pair<ArrayList<Character>, Integer>> {
+public class CharactersBrowse extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Pair<ArrayList<Character>, Integer>> {
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/characters";
     private static final int CHARACTER_LOADER_ID = 1;
@@ -42,7 +42,7 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_characters);
+        setContentView(R.layout.activity_browse);
         listView = (ListView) findViewById(R.id.list);
         emptyView = (TextView) findViewById(R.id.empty_view);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
@@ -53,8 +53,6 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         nextPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //store offset in temp because it will get reset with search button click and you
-                //only want that to happen when the search button is physically clicked.
                 offset += LIMIT;
                 artificialClick = true;
                 fetchTheData();
@@ -63,8 +61,6 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         previousPageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //store offset in temp because it will get reset with search button click and you
-                //only want that to happen when the search button is physically clicked.
                 offset -= LIMIT;
                 artificialClick = true;
                 fetchTheData();
@@ -96,7 +92,7 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     public void onLoadFinished(Loader<Pair<ArrayList<Character>, Integer>> loader, Pair<ArrayList<Character>, Integer> data) {
         characters = data.first;
         total = data.second;
-        adapter = new CharacterAdapter(CharactersActivity.this, characters);
+        adapter = new CharacterAdapter(CharactersBrowse.this, characters);
         listView.setAdapter(adapter);
         emptyView.setText("No Characters Found");
         progressBar.setVisibility(GONE);
