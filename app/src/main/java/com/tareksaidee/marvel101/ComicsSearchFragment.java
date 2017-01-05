@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/comics";
     private static int COMICS_LOADER_ID = 1;
+    private final int LIMIT = 15;
     ArrayList<Comic> comics;
     ComicAdapter adapter;
     ListView listView;
@@ -42,6 +44,11 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
     CheckBox startsWithCheck;
     TextView emptyView;
     ProgressBar progressBar;
+    Button nextPageButton;
+    Button previousPageButton;
+    private int offset = 0;
+    private int total;
+    private boolean artificialClick = false;
 
 
     public ComicsSearchFragment() {
@@ -57,6 +64,26 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         comicSearchBox = (EditText) rootView.findViewById(R.id.char_search_box);
         emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        RelativeLayout footerLayout = (RelativeLayout) inflater.inflate(R.layout.listview_footer, null);
+        listView.addFooterView(footerLayout);
+        nextPageButton = (Button) footerLayout.findViewById(R.id.next_page_button);
+        previousPageButton = (Button) footerLayout.findViewById(R.id.previous_page_button);
+        nextPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset += LIMIT;
+                artificialClick = true;
+                searchButton.performClick();
+            }
+        });
+        previousPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                offset -= LIMIT;
+                artificialClick = true;
+                searchButton.performClick();
+            }
+        });
         progressBar.setVisibility(GONE);
         emptyView.setVisibility(GONE);
         ConnectivityManager cm =
@@ -67,6 +94,9 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (!artificialClick) {
+                    offset = 0;
+                }
                 if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
                     getLoaderManager().destroyLoader(COMICS_LOADER_ID);
                     getLoaderManager().initLoader(COMICS_LOADER_ID, null, ComicsSearchFragment.this);
@@ -80,6 +110,7 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
                 //close keyboard
                 InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(comicSearchBox.getWindowToken(), 0);
+                artificialClick = false;
             }
         });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -98,9 +129,10 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
         uriBuilder.appendQueryParameter("apikey", SECRET_KEYS.PUBLIC_KEY);
-        uriBuilder.appendQueryParameter("limit", "50");
+        uriBuilder.appendQueryParameter("limit", LIMIT + "");
         uriBuilder.appendQueryParameter("noVariants", "true");
         uriBuilder.appendQueryParameter("format", "comic");
+        uriBuilder.appendQueryParameter("offset", offset + "");
         uriBuilder.appendQueryParameter("ts", timeStamp);
         uriBuilder.appendQueryParameter("hash", QueryUtils.getMD5Hash(timeStamp));
         if (startsWithCheck.isChecked())
@@ -113,10 +145,19 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
     @Override
     public void onLoadFinished(android.support.v4.content.Loader<Pair<ArrayList<Comic>, Integer>> loader, Pair<ArrayList<Comic>, Integer> data) {
         comics = data.first;
+        total = data.second;
         adapter = new ComicAdapter(getContext(), comics);
         listView.setAdapter(adapter);
         emptyView.setText("No Comics Found");
         progressBar.setVisibility(GONE);
+        if (offset + LIMIT >= total)
+            nextPageButton.setVisibility(GONE);
+        else
+            nextPageButton.setVisibility(View.VISIBLE);
+        if (offset == 0)
+            previousPageButton.setVisibility(GONE);
+        else
+            previousPageButton.setVisibility(View.VISIBLE);
     }
 
     @Override
