@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -26,11 +27,17 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
 
     private static final String QUERY_URL = "https://gateway.marvel.com:443/v1/public/characters";
     private static final int CHARACTER_LOADER_ID = 1;
+    private final int LIMIT = 15;
     ArrayList<Character> characters;
     CharacterAdapter adapter;
     ListView listView;
     TextView emptyView;
     ProgressBar progressBar;
+    Button nextPageButton;
+    Button previousPageButton;
+    private int offset = 0;
+    private int total;
+    private boolean artificialClick = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +46,37 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         listView = (ListView) findViewById(R.id.list);
         emptyView = (TextView) findViewById(R.id.empty_view);
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-            LoaderManager loaderManager = getLoaderManager();
-            loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
-            listView.setEmptyView(emptyView);
-        } else {
-            progressBar.setVisibility(GONE);
-            emptyView.setText("No Internet Connection");
-        }
+        RelativeLayout footerLayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.listview_footer, null);
+        listView.addFooterView(footerLayout);
+        nextPageButton = (Button) footerLayout.findViewById(R.id.next_page_button);
+        previousPageButton = (Button) footerLayout.findViewById(R.id.previous_page_button);
+        nextPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //store offset in temp because it will get reset with search button click and you
+                //only want that to happen when the search button is physically clicked.
+                offset += LIMIT;
+                artificialClick = true;
+                fetchTheData();
+            }
+        });
+        previousPageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //store offset in temp because it will get reset with search button click and you
+                //only want that to happen when the search button is physically clicked.
+                offset -= LIMIT;
+                artificialClick = true;
+                fetchTheData();
+            }
+        });
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 updateLayout(view, (Character) adapter.getItem(position));
             }
         });
+        fetchTheData();
     }
 
     @Override
@@ -64,8 +85,9 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         Uri.Builder uriBuilder = baseUri.buildUpon();
         String timeStamp = Calendar.getInstance().getTime().toString();
         uriBuilder.appendQueryParameter("apikey", SECRET_KEYS.PUBLIC_KEY);
-        uriBuilder.appendQueryParameter("limit", "50");
+        uriBuilder.appendQueryParameter("limit", LIMIT +"");
         uriBuilder.appendQueryParameter("ts", timeStamp);
+        uriBuilder.appendQueryParameter("offset", offset + "");
         uriBuilder.appendQueryParameter("hash", QueryUtils.getMD5Hash(timeStamp));
         return new CharacterLoader(this, uriBuilder.toString());
     }
@@ -73,10 +95,19 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
     @Override
     public void onLoadFinished(Loader<Pair<ArrayList<Character>, Integer>> loader, Pair<ArrayList<Character>, Integer> data) {
         characters = data.first;
+        total = data.second;
         adapter = new CharacterAdapter(CharactersActivity.this, characters);
         listView.setAdapter(adapter);
         emptyView.setText("No Characters Found");
         progressBar.setVisibility(GONE);
+        if (offset + LIMIT >= total)
+            nextPageButton.setVisibility(GONE);
+        else
+            nextPageButton.setVisibility(View.VISIBLE);
+        if (offset == 0)
+            previousPageButton.setVisibility(GONE);
+        else
+            previousPageButton.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -103,6 +134,28 @@ public class CharactersActivity extends AppCompatActivity implements LoaderManag
         public Pair<ArrayList<Character>, Integer> loadInBackground() {
             return QueryUtils.extractCharacters(NetworkUtils.getData(mUrl));
         }
+    }
+
+    private void fetchTheData() {
+        if (!artificialClick) {
+            offset = 0;
+        }
+
+        ConnectivityManager cm =
+                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        getLoaderManager().destroyLoader(CHARACTER_LOADER_ID);
+        if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+            progressBar.setVisibility(View.VISIBLE);
+            LoaderManager loaderManager = getLoaderManager();
+            loaderManager.initLoader(CHARACTER_LOADER_ID, null, this);
+            listView.setEmptyView(emptyView);
+            emptyView.setVisibility(GONE);
+        } else {
+            progressBar.setVisibility(GONE);
+            emptyView.setText("No Internet Connection");
+        }
+        artificialClick = false;
     }
 
     private void updateLayout(View tempView, Character temp) {
