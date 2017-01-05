@@ -4,6 +4,7 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
     android:orientation="vertical"
     tools:context="com.tareksaidee.marvel101.MainActivity">
 
@@ -12,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/colorAccent"
         android:text="Characters" />
 
     <Button
@@ -19,7 +22,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/colorAccent"
         android:text="Comics" />
+
+    <Button
+        android:id="@+id/events_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/colorAccent"
+        android:text="Events" />
+
+    <Button
+        android:id="@+id/creators_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:background="@color/colorAccent"
+        android:text="Creators" />
 
     <Button
         android:id="@+id/search_button"
@@ -27,5 +50,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="16dp"
+        android:background="@color/colorAccent"
         android:text="search " />
 </LinearLayout>

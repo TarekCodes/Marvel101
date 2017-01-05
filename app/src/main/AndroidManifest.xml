@@ -22,7 +22,9 @@
         <activity android:name=".ComicsBrowse" />
         <activity
             android:name=".SearchActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+        <activity android:name=".CreatorsBrowse" />
+        <activity android:name=".EventsBrowse"></activity>
     </application>
 
 </manifest>

@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     Button charactersButton;
     Button searchButton;
     Button comicsButton;
+    Button creatorsButton;
+    Button eventsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ComicsBrowse.class);
+                startActivity(intent);
+            }
+        });
+        creatorsButton = (Button) findViewById(R.id.creators_button);
+        creatorsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), CreatorsBrowse.class);
+                startActivity(intent);
+            }
+        });
+        eventsButton = (Button) findViewById(R.id.events_button);
+        eventsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), EventsBrowse.class);
                 startActivity(intent);
             }
         });
