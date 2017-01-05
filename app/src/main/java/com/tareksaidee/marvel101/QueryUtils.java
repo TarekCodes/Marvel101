@@ -143,6 +143,7 @@ public class QueryUtils {
             JSONObject jsonObject = new JSONObject(JSONResponse);
             JSONObject mainObject = jsonObject.getJSONObject("data");
             JSONArray results = mainObject.getJSONArray("results");
+            total = mainObject.getInt("total");
             for (int i = 0; i < results.length(); i++) {
                 JSONObject curr = results.getJSONObject(i);
                 int id = curr.getInt("id");
