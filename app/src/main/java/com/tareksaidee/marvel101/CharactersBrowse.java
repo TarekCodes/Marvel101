@@ -160,7 +160,8 @@ public class CharactersBrowse extends AppCompatActivity implements LoaderManager
         Button goToWiki = (Button) tempView.findViewById(R.id.open_wiki_button);
         if (!temp.wasClicked()) {
             charDescrp.setMaxLines(20);
-            comicsNumber.setVisibility(View.VISIBLE);
+            if(temp.getAvailableComics()!=0)
+                comicsNumber.setVisibility(View.VISIBLE);
             if (temp.getWikiURL() != null)
                 goToWiki.setVisibility(View.VISIBLE);
             temp.gotClicked();

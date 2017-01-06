@@ -56,9 +56,14 @@ public class CharacterAdapter extends ArrayAdapter {
         }
         else {
             charDescrp.setMaxLines(20);
-            comicsNumber.setVisibility(View.VISIBLE);
+            if(character.getAvailableComics()!=0)
+                comicsNumber.setVisibility(View.VISIBLE);
+            else
+                comicsNumber.setVisibility(GONE);
             if(character.getWikiURL()!=null)
                 goToWiki.setVisibility(View.VISIBLE);
+            else
+                goToWiki.setVisibility(GONE);
         }
         image.setImageBitmap(character.getImage());
         charName.setText(character.getCharName());

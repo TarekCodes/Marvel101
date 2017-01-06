@@ -51,6 +51,7 @@
             tools:text="A VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDERA VERY LONG LONGLONG PLACE HOLDER" />
 
         <TextView
+            android:id="@+id/comic_creators_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

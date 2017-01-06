@@ -189,11 +189,33 @@ public class ComicsSearchFragment extends Fragment implements android.support.v4
         TextView synop = ((TextView) tempView.findViewById(R.id.comic_synopsis));
         LinearLayout expContainer = (LinearLayout) tempView.findViewById(R.id.expandable_views_container);
         Button goToDetails = (Button) tempView.findViewById(R.id.open_details_button);
+        TextView partOfHeader = (TextView) tempView.findViewById(R.id.part_of_events_header);
+        TextView partOf = (TextView) tempView.findViewById(R.id.part_of_events);
+        TextView collectionsHeader = (TextView) tempView.findViewById(R.id.collections_header);
+        TextView collections = (TextView) tempView.findViewById(R.id.comics_collection);
         if (!temp.wasClicked()) {
             synop.setMaxLines(20);
             expContainer.setVisibility(View.VISIBLE);
             if (temp.getDetailsURL() == null)
                 goToDetails.setVisibility(View.GONE);
+            else
+                goToDetails.setVisibility(View.VISIBLE);
+            if (temp.getCollections().equals("")) {
+                partOfHeader.setVisibility(GONE);
+                partOf.setVisibility(GONE);
+            }
+            else{
+                partOfHeader.setVisibility(View.VISIBLE);
+                partOf.setVisibility(View.VISIBLE);
+            }
+            if (temp.getCollections().equals("")) {
+                collectionsHeader.setVisibility(GONE);
+                collections.setVisibility(GONE);
+            }
+            else{
+                collections.setVisibility(View.VISIBLE);
+                collectionsHeader.setVisibility(View.VISIBLE);
+            }
             temp.gotClicked();
         } else {
             synop.setMaxLines(3);
