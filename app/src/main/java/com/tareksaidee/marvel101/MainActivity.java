@@ -1,10 +1,12 @@
 package com.tareksaidee.marvel101;
 
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,11 +16,13 @@ public class MainActivity extends AppCompatActivity {
     Button comicsButton;
     Button creatorsButton;
     Button eventsButton;
+    TextView accreditMarvel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Typeface face = Typeface.createFromAsset(getAssets(), "fonts/comicsfont.TTF");
         charactersButton = (Button) findViewById(R.id.characters_button);
         charactersButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,5 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+        accreditMarvel = (TextView) findViewById(R.id.accredit_marvel);
+        accreditMarvel.setTypeface(face);
+        charactersButton.setTypeface(face);
+        comicsButton.setTypeface(face);
+        searchButton.setTypeface(face);
+        creatorsButton.setTypeface(face);
+        eventsButton.setTypeface(face);
     }
 }

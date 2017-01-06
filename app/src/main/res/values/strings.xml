@@ -2,4 +2,6 @@
     <string name="app_name">Marvel 101</string>
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="accredit_marvel">Data provided by Marvel. © 2014 Marvel</string>
+
 </resources>

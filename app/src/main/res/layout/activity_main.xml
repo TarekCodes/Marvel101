@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -8,48 +8,84 @@
     android:orientation="vertical"
     tools:context="com.tareksaidee.marvel101.MainActivity">
 
-    <Button
-        android:id="@+id/characters_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:background="@color/colorAccent"
-        android:text="Characters" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".6"
+        android:contentDescription="Background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background3" />
 
-    <Button
-        android:id="@+id/comics_button"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:background="@color/colorAccent"
-        android:text="Comics" />
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/events_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:background="@color/colorAccent"
-        android:text="Events" />
+        <Button
+            android:id="@+id/characters_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:background="@color/colorAccent"
+            android:padding="16dp"
+            android:text="Characters"
+            android:textColor="#ffff" />
 
-    <Button
-        android:id="@+id/creators_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:background="@color/colorAccent"
-        android:text="Creators" />
+        <Button
+            android:id="@+id/comics_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:background="@color/colorAccent"
+            android:padding="16dp"
+            android:text="Comics"
+            android:textColor="#ffff" />
 
-    <Button
-        android:id="@+id/search_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="16dp"
-        android:background="@color/colorAccent"
-        android:text="search " />
-</LinearLayout>
+        <Button
+            android:id="@+id/events_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:background="@color/colorAccent"
+            android:padding="16dp"
+            android:text="Events"
+            android:textColor="#ffff" />
+
+        <Button
+            android:id="@+id/creators_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:background="@color/colorAccent"
+            android:padding="16dp"
+            android:text="Creators"
+            android:textColor="#ffff" />
+
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="32dp"
+            android:background="@color/colorAccent"
+            android:padding="16dp"
+            android:text="search "
+            android:textColor="#ffff" />
+
+        <TextView
+            android:id="@+id/accredit_marvel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center|bottom"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_marginTop="64dp"
+            android:text="@string/accredit_marvel"
+            android:textColor="#ffff" />
+    </LinearLayout>
+</RelativeLayout>
