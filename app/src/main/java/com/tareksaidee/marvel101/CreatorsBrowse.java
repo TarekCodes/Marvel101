@@ -158,6 +158,14 @@ public class CreatorsBrowse extends AppCompatActivity implements LoaderManager.L
     private void updateLayout(View tempView, Creator temp) {
         TextView events = ((TextView) tempView.findViewById(R.id.creator_events));
         Button allComics = (Button) tempView.findViewById(R.id.open_comics_button);
+        TextView eventsHeader = (TextView) tempView.findViewById(R.id.creator_events_header);
+        if (temp.getEvents().equals("")) {
+            events.setVisibility(GONE);
+            eventsHeader.setVisibility(GONE);
+        } else {
+            events.setVisibility(View.VISIBLE);
+            eventsHeader.setVisibility(View.VISIBLE);
+        }
         if (!temp.wasClicked()) {
             events.setMaxLines(50);
             if (temp.getAllComicsURL() != null)

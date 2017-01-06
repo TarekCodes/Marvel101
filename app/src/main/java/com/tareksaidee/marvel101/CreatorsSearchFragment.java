@@ -93,7 +93,7 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!artificialClick) {
+                if (!artificialClick) {
                     offset = 0;
                 }
                 if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
@@ -184,6 +184,14 @@ public class CreatorsSearchFragment extends Fragment implements android.support.
     private void updateLayout(View tempView, Creator temp) {
         TextView events = ((TextView) tempView.findViewById(R.id.creator_events));
         Button allComics = (Button) tempView.findViewById(R.id.open_comics_button);
+        TextView eventsHeader = (TextView) tempView.findViewById(R.id.creator_events_header);
+        if (temp.getEvents().equals("")) {
+            events.setVisibility(GONE);
+            eventsHeader.setVisibility(GONE);
+        } else {
+            events.setVisibility(View.VISIBLE);
+            eventsHeader.setVisibility(View.VISIBLE);
+        }
         if (!temp.wasClicked()) {
             events.setMaxLines(50);
             if (temp.getAllComicsURL() != null)

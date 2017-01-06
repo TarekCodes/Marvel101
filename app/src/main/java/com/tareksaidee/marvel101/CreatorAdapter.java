@@ -39,6 +39,7 @@ public class CreatorAdapter extends ArrayAdapter<Creator> {
         final Creator creator = getItem(position);
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.creator_image);
         TextView name = (TextView) listItemView.findViewById(R.id.creator_name);
+        TextView eventsHeader = (TextView) listItemView.findViewById(R.id.creator_events_header);
         TextView events = (TextView) listItemView.findViewById(R.id.creator_events);
         Button goToAllComics = (Button) listItemView.findViewById(R.id.open_comics_button);
         goToAllComics.setOnClickListener(new View.OnClickListener() {
@@ -52,13 +53,19 @@ public class CreatorAdapter extends ArrayAdapter<Creator> {
         imageView.setImageBitmap(creator.getImage());
         name.setText(creator.getName());
         events.setText(creator.getEvents());
-        if(!(getItem(position)).wasClicked()) {
+        if (creator.getEvents().equals("")) {
+            events.setVisibility(GONE);
+            eventsHeader.setVisibility(GONE);
+        } else {
+            events.setVisibility(View.VISIBLE);
+            eventsHeader.setVisibility(View.VISIBLE);
+        }
+        if (!(getItem(position)).wasClicked()) {
             events.setMaxLines(5);
             goToAllComics.setVisibility(GONE);
-        }
-        else {
+        } else {
             events.setMaxLines(50);
-            if(creator.getAllComicsURL()!=null)
+            if (creator.getAllComicsURL() != null)
                 goToAllComics.setVisibility(View.VISIBLE);
         }
         return listItemView;
