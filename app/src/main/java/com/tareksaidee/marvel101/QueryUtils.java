@@ -229,6 +229,7 @@ public class QueryUtils {
             date = sdf.parse(weirdDate);
         } catch (ParseException e) {
             Log.e("date", "couldn't parse weird date");
+            return "Ongoing";
         }
         sdf = new SimpleDateFormat("MM-dd-yyyy");
         return sdf.format(date);

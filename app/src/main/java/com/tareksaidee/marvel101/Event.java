@@ -65,6 +65,8 @@ public class Event {
     }
 
     public String getEventPeriod() {
+        if(mStartDate.equals("Ongoing") || mEndDate.equals("Ongoing"))
+            return "Ongoing";
         return mStartDate + " - " + mEndDate;
     }
 

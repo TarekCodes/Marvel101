@@ -9,7 +9,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.AdapterView;
@@ -94,7 +93,6 @@ public class EventsBrowse extends AppCompatActivity implements LoaderManager.Loa
     public void onLoadFinished(Loader<Pair<ArrayList<Event>, Integer>> loader, Pair<ArrayList<Event>, Integer> data) {
         events = data.first;
         total = data.second;
-        Log.e("whatever",total+"");
         adapter = new EventAdapter(EventsBrowse.this, events);
         listView.setAdapter(adapter);
         emptyView.setText("No Characters Found");

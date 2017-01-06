@@ -37,7 +37,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(R.layout.event_item, parent, false);
         }
-        final Event event = (Event) getItem(position);
+        final Event event = getItem(position);
         ImageView image = (ImageView) listItemView.findViewById(R.id.event_image);
         TextView title = (TextView) listItemView.findViewById(R.id.event_title);
         TextView descrp = (TextView) listItemView.findViewById(R.id.event_description);
