@@ -2,6 +2,7 @@ package com.tareksaidee.marvel101;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -63,6 +64,8 @@ public class CharSearchFragment extends Fragment implements android.support.v4.a
         emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
         startsWithCheck = (CheckBox) rootView.findViewById(R.id.starts_with_check);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comicsfont.TTF");
+        charSearchBox.setTypeface(face);
         RelativeLayout footerLayout = (RelativeLayout) inflater.inflate(R.layout.listview_footer, null);
         listView.addFooterView(footerLayout);
         nextPageButton = (Button) footerLayout.findViewById(R.id.next_page_button);

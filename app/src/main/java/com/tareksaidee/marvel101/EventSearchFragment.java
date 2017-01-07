@@ -2,6 +2,7 @@ package com.tareksaidee.marvel101;
 
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -65,6 +66,8 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
         searchButton = (Button) rootView.findViewById(R.id.start_search_button);
         emptyView = (TextView) rootView.findViewById(R.id.empty_view);
         progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
+        Typeface face = Typeface.createFromAsset(getActivity().getAssets(), "fonts/comicsfont.TTF");
+        eventSearchBox.setTypeface(face);
         RelativeLayout footerLayout = (RelativeLayout) inflater.inflate(R.layout.listview_footer, null);
         listView.addFooterView(footerLayout);
         nextPageButton = (Button) footerLayout.findViewById(R.id.next_page_button);
@@ -94,7 +97,7 @@ public class EventSearchFragment extends Fragment implements android.support.v4.
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!artificialClick) {
+                if (!artificialClick) {
                     offset = 0;
                 }
                 if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {

@@ -23,6 +23,7 @@
         android:orientation="vertical">
 
         <Button
+            android:alpha=".8"
             android:id="@+id/characters_button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
             android:textColor="#ffff" />
 
         <Button
+            android:alpha=".8"
             android:id="@+id/comics_button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
@@ -45,6 +47,7 @@
             android:textColor="#ffff" />
 
         <Button
+            android:alpha=".8"
             android:id="@+id/events_button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
@@ -56,6 +59,7 @@
             android:textColor="#ffff" />
 
         <Button
+            android:alpha=".8"
             android:id="@+id/creators_button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
@@ -67,6 +71,7 @@
             android:textColor="#ffff" />
 
         <Button
+            android:alpha=".8"
             android:id="@+id/search_button"
             android:layout_width="180dp"
             android:layout_height="wrap_content"

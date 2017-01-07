@@ -5,6 +5,14 @@
     android:background="@color/colorPrimaryDark"
     tools:context="com.tareksaidee.marvel101.CreatorsSearchFragment">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha=".6"
+        android:contentDescription="Background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/background3" />
+
     <LinearLayout
         android:id="@+id/input_layout"
         android:layout_width="match_parent"
@@ -17,8 +25,10 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:background="@android:color/holo_orange_light"
-            android:hint="creator name"
-            android:lines="1" />
+            android:hint="CREATOR NAME"
+            android:lines="1"
+            android:minHeight="25dp"
+            android:textColor="#000000" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,7 +43,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:background="@android:color/holo_red_dark"
-                android:text="Search" />
+                android:text="Search"
+                android:textColor="#ffffff" />
 
             <CheckBox
                 android:id="@+id/starts_with_check"
@@ -62,8 +73,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:textColor="#ffffff"
-        android:textAppearance="?android:textAppearanceMedium" />
+        android:textAppearance="?android:textAppearanceMedium"
+        android:textColor="#ffffff" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
