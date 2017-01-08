@@ -1,5 +1,5 @@
 # Marvel 101
-Marvel 101 uses the official [Marvel API](https://developer.marvel.com/) to retreive various information and uses them to allow the users to either browse or search for
+Marvel 101 makes various calls to the official [Marvel API](https://developer.marvel.com/) and retreives JSON responses, parses them and then uses the parsed data to allow the users to either browse or search for
 their favorite character, comic, event or creator.
 ## Features
 <ul>
@@ -10,6 +10,9 @@ their favorite character, comic, event or creator.
   <li>All items have links to Marvel's website to, for example, allow the user to read/purchase a comic and more </li>
   <li>All the data retrieved with each call is parsed to hide useless info that the user might not interested in</li>
 </ul>
+
+## Usage
+If, for some reason, you want to clone the repository and run the APP on your local machine then first you have to create a Java file called "SECRET_KEYS". In the file, you need the following static, final strings: "PUBLIC_KEY" and "PRIVATE_KEY" and each will hold your API keys that you get by creating an account at [Marvel's website](https://developer.marvel.com/).
 
 ## Potential Additions
 
