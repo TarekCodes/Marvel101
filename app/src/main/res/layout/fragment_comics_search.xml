@@ -65,7 +65,10 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/input_layout"></ListView>
+        android:footerDividersEnabled="false"
+        android:dividerHeight="1dp"
+        android:divider="@color/colorPrimary"
+        android:layout_below="@id/input_layout"/>
 
     <TextView
         android:id="@+id/empty_view"
