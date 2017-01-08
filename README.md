@@ -18,3 +18,19 @@ their favorite character, comic, event or creator.
   <li> Add even more information for each item </li>
   <li> If more calls get added to the Marvel API then the app will be improved further </li>
 </ul>
+
+## Screenshots
+
+<img style="margin-right: 10px;" src="http://i.imgur.com/r1991ip.png" width="500" height="800" />
+</br> </br>
+<img src="http://i.imgur.com/OWwVMvp.png" width="500" height="800"/>
+</br> </br>
+<img style="margin-right: 10px;" src="http://i.imgur.com/SFLjqhe.png" width="500" height="800" />
+</br> </br>
+<img src="http://i.imgur.com/WBaQimB.png" width="500" height="800"/>
+</br> </br>
+<img style="margin-right: 10px;" src="http://i.imgur.com/8biTk3R.png" width="500" height="800" />
+</br> </br>
+<img src="http://i.imgur.com/VMGTF1Sg.png" width="500" height="800"/>
+    
+   
